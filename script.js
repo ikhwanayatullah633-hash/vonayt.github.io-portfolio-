@@ -1,46 +1,62 @@
 /**
- * Fungsi untuk membuka Pop-up
- * @param {string} src - Nama file video/gambar
- * @param {string} title - Judul yang akan tampil
- * @param {string} desc - Deskripsi yang akan tampil
+ * FUNGSI HYBRID: Bisa memutar video lokal (.mp4), gambar (.gif/.jpg), 
+ * dan Video YouTube (ID) dalam satu fungsi.
  */
 function openModal(src, title, desc) {
     const modal = document.getElementById('videoModal');
     const mediaContainer = document.getElementById('modalMedia');
-
-    if (src.toLowerCase().endsWith('.mp4')) {
-    mediaContainer.innerHTML = `
-        <video controls autoplay muted playsinline style="width:100%; aspect-ratio: 16/9;">
-            <source src="${src}" type="video/mp4">
-        </video>`;
-}
-    // Gunakan path lengkap jika file berada dalam folder
-    // Contoh: 'dumpanimasi.mp4/TES TES.mp4'
     
-    if (src.toLowerCase().endsWith('.mp4')) {
+    // 1. Bersihkan isi modal agar tidak menumpuk dengan video sebelumnya
+    mediaContainer.innerHTML = '';
+
+    // 2. DETEKSI FORMAT FILE
+    const isVideo = src.toLowerCase().endsWith('.mp4');
+    const isImage = src.toLowerCase().endsWith('.gif') || 
+                    src.toLowerCase().endsWith('.jpg') || 
+                    src.toLowerCase().endsWith('.png');
+
+    if (isVideo) {
+        // --- FORMAT UNTUK VIDEO REPOSITORY GITHUB (.mp4) ---
         mediaContainer.innerHTML = `
-            <video controls autoplay>
+            <video controls autoplay muted loop playsinline style="width:100%; aspect-ratio: 16/9; object-fit: cover;">
                 <source src="${src}" type="video/mp4">
-                Browser tidak mendukung video.
             </video>`;
-    } else {
-        mediaContainer.innerHTML = `<img src="${src}" alt="${title}">`;
+    } 
+    else if (isImage) {
+        // --- FORMAT UNTUK GAMBAR ATAU GIF ---
+        mediaContainer.innerHTML = `
+            <img src="${src}" style="width:100%; aspect-ratio: 16/9; object-fit: cover;">`;
+    } 
+    else {
+        // --- FORMAT UNTUK YOUTUBE (Jika input adalah ID Video) ---
+        // Menambahkan parameter autoplay, mute, dan loop khusus YouTube
+        mediaContainer.innerHTML = `
+            <iframe 
+                style="width:100%; aspect-ratio: 16/9;" 
+                src="https://www.youtube.com/embed/${src}?autoplay=1&mute=1&loop=1&playlist=${src}&controls=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media; picture-in-picture" 
+                allowfullscreen>
+            </iframe>`;
     }
     
+    // 3. Masukkan Judul dan Deskripsi
     document.getElementById('modalTitle').innerText = title;
     document.getElementById('modalDesc').innerText = desc;
+    
+    // 4. Tampilkan Modal
     modal.style.display = 'flex';
 }
 
-// Fungsi menutup Pop-up
+// Fungsi untuk menutup modal
 function closeModal() {
     const modal = document.getElementById('videoModal');
     const mediaContainer = document.getElementById('modalMedia');
     modal.style.display = 'none';
-    mediaContainer.innerHTML = ''; // Penting agar suara video mati saat ditutup
+    mediaContainer.innerHTML = ''; // Mematikan suara video saat ditutup
 }
 
-// Menutup modal jika klik di area hitam luar kotak
+// Menutup modal jika area hitam di luar kotak di-klik
 window.onclick = function(event) {
     const modal = document.getElementById('videoModal');
     if (event.target == modal) {
