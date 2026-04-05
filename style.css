@@ -1,0 +1,48 @@
+/* Navigasi */
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: #000;
+    color: #fff;
+}
+
+/* Grid Portofolio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Membuat 4 kolom */
+    gap: 0; /* Tanpa jarak antar gambar seperti di contoh */
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Agar gambar tidak gepeng */
+    display: block;
+}
+
+/* Efek Hover (Teks muncul saat kursor di atas gambar) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1;
+}
