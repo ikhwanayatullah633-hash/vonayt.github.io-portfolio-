@@ -8,16 +8,22 @@ function openModal(src, title, desc) {
     const modal = document.getElementById('videoModal');
     const mediaContainer = document.getElementById('modalMedia');
     
-    // Deteksi otomatis jika file adalah MP4 atau Gambar
+    // Gunakan path lengkap jika file berada dalam folder
+    // Contoh: 'dumpanimasi.mp4/TES TES.mp4'
+    
     if (src.toLowerCase().endsWith('.mp4')) {
-        mediaContainer.innerHTML = `<video controls autoplay style="width:100%; height:auto;"><source src="${src}" type="video/mp4"></video>`;
+        mediaContainer.innerHTML = `
+            <video controls autoplay>
+                <source src="${src}" type="video/mp4">
+                Browser tidak mendukung video.
+            </video>`;
     } else {
-        mediaContainer.innerHTML = `<img src="${src}" style="width:100%; height:auto;">`;
+        mediaContainer.innerHTML = `<img src="${src}" alt="${title}">`;
     }
     
     document.getElementById('modalTitle').innerText = title;
     document.getElementById('modalDesc').innerText = desc;
-    modal.style.display = 'flex'; // Menampilkan modal
+    modal.style.display = 'flex';
 }
 
 // Fungsi menutup Pop-up
