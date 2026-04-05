@@ -7,7 +7,13 @@
 function openModal(src, title, desc) {
     const modal = document.getElementById('videoModal');
     const mediaContainer = document.getElementById('modalMedia');
-    
+
+    if (src.toLowerCase().endsWith('.mp4')) {
+    mediaContainer.innerHTML = `
+        <video controls autoplay muted playsinline style="width:100%; aspect-ratio: 16/9;">
+            <source src="${src}" type="video/mp4">
+        </video>`;
+}
     // Gunakan path lengkap jika file berada dalam folder
     // Contoh: 'dumpanimasi.mp4/TES TES.mp4'
     
