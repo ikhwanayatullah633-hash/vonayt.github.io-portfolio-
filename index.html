@@ -1,27 +1,63 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Animasi 2D</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <nav>
-            <div class="logo">VonAyt</div>
-            <ul>
-                <li>animasi</li>
-                <li>kontak</li>
+            <div class="logo">nasiijau</div>
+            <ul class="nav-links">
+                <li><a href="#">animation</a></li>
+                <li><a href="#">contact</a></li>
+                <li class="social-icons">
+                    <a href="mailto:emailanda@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                    <a href="https://youtube.com/@anda" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://instagram.com/anda" target="_blank"><i class="fab fa-instagram"></i></a>
+                </li>
             </ul>
         </nav>
     </header>
 
     <main class="portfolio-grid">
-        <div class="portfolio-item">
-            <img src="Kakashi Hataque.gif" alt="Deskripsi Animasi">
+        
+        <div class="portfolio-item" onclick="openModal('animasi.mp4', 'Challenger', 'Directing, Storyboard, 2D Animation, Compositing, Background Paint for the Challengers')">
+            <video autoplay loop muted playsinline>
+                <source src="animasi.mp4" type="video/mp4">
+            </video>
             <div class="overlay">
-                <h3>Fan Animation</h3>
-                <p>Deskripsi singkat produksi</p>
+                <h3>Challenger</h3>
+                <p>Click to play full video</p>
             </div>
         </div>
+
+        <div class="portfolio-item" onclick="openModal('Kakashi Hataque.gif', 'Wanara', 'Animasi kunci 2D untuk Tampar Production')">
+            <img src="Kakashi Hataque.gif" alt="Animasi Kakashi">
+            <div class="overlay">
+                <h3>Wanara</h3>
+                <p>Click to enlarge</p>
+            </div>
+        </div>
+
         </main>
+
+    <div id="videoModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div id="modalMedia" class="video-container">
+                </div>
+            <div class="modal-text">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
