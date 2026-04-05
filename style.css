@@ -4,30 +4,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
 
 /* ==========================================
-   2. DASAR (GENERAL) & RESET
+   2. RESET & DASAR (GENERAL)
    ========================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Default teks menggunakan Roboto */
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif; /* Default font */
 }
 
 body {
     background-color: #050505;
     color: white;
-    overflow-x: hidden; /* Mencegah scroll horizontal */
+    overflow-x: hidden;
 }
 
-/* Tipografi Judul */
 h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif; /* Font judul */
     font-weight: 700;
 }
 
 /* ==========================================
-   3. HEADER & NAVIGASI (MENGIKUTI REFERENSI)
+   3. HEADER & NAVIGASI
    ========================================== */
 header {
     padding: 15px 5%;
@@ -55,61 +53,51 @@ nav {
     gap: 25px;
 }
 
-/* Link Teks (Contact, Animation) */
 .nav-links a {
     color: white;
     text-decoration: none;
     font-size: 14px;
-    font-weight: 400;
-    text-transform: lowercase; /* Seperti di referensi */
+    text-transform: lowercase;
 }
 
-/* Ikon Sosial (Menumpuk di kanan) */
 .social-icons {
     display: flex;
     gap: 15px;
-    margin-left: 10px;
 }
 
 .social-icons i {
     font-size: 1rem;
     color: white;
-    transition: 0.3s;
-}
-
-.social-icons i:hover {
-    color: #aaa;
 }
 
 /* ==========================================
-   4. GRID PORTFOLIO (DESKTOP: 4 KOLOM TANPA GAP)
+   4. GRID PORTFOLIO (MERAPAT TANPA CELAH)
    ========================================== */
 .portfolio-grid {
     display: grid;
-    /* MEMAKSA 4 KOLOM DI DESKTOP */
+    /* 4 Kolom di Desktop */
     grid-template-columns: repeat(4, 1fr); 
-    /* Hilangkan semua celah agar menempel */
+    /* Tanpa celah di antara video */
     gap: 0; 
     padding: 0;
 }
 
 .portfolio-item {
     position: relative;
-    /* Rasio 16:9 agar simetris */
-    aspect-ratio: 16/9; 
+    aspect-ratio: 16/9; /* Rasio layar lebar */
     cursor: pointer;
     overflow: hidden;
+    background: #111;
 }
 
-.portfolio-item img, .portfolio-item video {
+.portfolio-item img, 
+.portfolio-item video {
     width: 100%;
     height: 100%;
-    /* Mengisi kotak tanpa gepeng */
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
 }
 
-/* Overlay muncul saat hover */
 .overlay {
     position: absolute;
     top: 0; left: 0;
@@ -126,15 +114,8 @@ nav {
     opacity: 1;
 }
 
-.overlay h3 {
-    font-size: 1rem;
-    color: white;
-    text-align: center;
-    padding: 0 10px;
-}
-
 /* ==========================================
-   5. MODAL SYSTEM (DESKTOP: SPLIT LAYOUT)
+   5. MODAL SYSTEM (SPLIT LAYOUT)
    ========================================== */
 .modal {
     display: none;
@@ -149,21 +130,23 @@ nav {
 
 .modal-content {
     display: flex;
-    flex-direction: row; /* Kiri media, Kanan teks di Desktop */
+    flex-direction: row; /* Kiri media, Kanan teks */
     width: 90%;
-    max-width: 1000px;
+    max-width: 1100px;
     background: #111;
     border: 1px solid #2a2a2a;
     overflow: hidden;
-    margin: auto; 
+    margin: auto; /* Memastikan di tengah */
 }
 
 #modalMedia {
-    flex: 2; /* Bagian video lebih lebar */
+    flex: 2; /* Bagian media lebih lebar */
     background: #000;
 }
 
-#modalMedia video, #modalMedia img, #modalMedia iframe {
+#modalMedia video, 
+#modalMedia img, 
+#modalMedia iframe {
     width: 100%;
     aspect-ratio: 16/9;
     display: block;
@@ -178,16 +161,6 @@ nav {
     justify-content: center;
 }
 
-.modal-text h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-}
-
-.modal-text p {
-    font-size: 14px;
-    color: #bbb;
-}
-
 .close-btn {
     position: absolute;
     top: 20px; right: 25px;
@@ -197,10 +170,27 @@ nav {
 }
 
 /* ==========================================
-   6. RESPONSIVE MOBILE (1 KOLOM PENUH)
+   6. RESPONSIVE MOBILE (PAS DI TENGAH)
    ========================================== */
 @media (max-width: 768px) {
-    /* Header di HP */
-    .nav-links {
-        gap: 15px;
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* 1 Kolom di HP */
     }
+
+    .modal-content {
+        flex-direction: column; /* Media atas, Teks bawah di HP */
+        width: 100%;
+        margin: 0;
+        border: none;
+    }
+
+    #modalMedia {
+        width: 100%;
+    }
+
+    .modal-text {
+        width: 100%;
+        padding: 20px;
+        text-align: center; /* Teks tengah agar simetris di HP */
+    }
+}
