@@ -1,21 +1,38 @@
 /* ==========================================
-   1. DASAR & GRID (Tetap Sama)
+   1. IMPORT FONTS (Poppins & Roboto)
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
+
+/* ==========================================
+   2. DASAR (GENERAL) & RESET
    ========================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    /* Default teks menggunakan Roboto */
+    font-family: 'Roboto', sans-serif; 
 }
 
 body {
     background-color: #050505;
     color: white;
+    overflow-x: hidden; /* Mencegah scroll horizontal */
 }
 
+/* Tipografi Judul */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+/* ==========================================
+   3. HEADER & NAVIGASI (MENGIKUTI REFERENSI)
+   ========================================== */
 header {
     padding: 15px 5%;
     background: #000;
+    border-bottom: 1px solid #1a1a1a;
 }
 
 nav {
@@ -24,29 +41,62 @@ nav {
     align-items: center;
 }
 
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 20px;
+    align-items: center;
+    gap: 25px;
 }
 
+/* Link Teks (Contact, Animation) */
 .nav-links a {
     color: white;
     text-decoration: none;
     font-size: 14px;
+    font-weight: 400;
+    text-transform: lowercase; /* Seperti di referensi */
 }
 
-/* Grid Portfolio */
+/* Ikon Sosial (Menumpuk di kanan) */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+.social-icons i {
+    font-size: 1rem;
+    color: white;
+    transition: 0.3s;
+}
+
+.social-icons i:hover {
+    color: #aaa;
+}
+
+/* ==========================================
+   4. GRID PORTFOLIO (DESKTOP: 4 KOLOM TANPA GAP)
+   ========================================== */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
+    /* MEMAKSA 4 KOLOM DI DESKTOP */
+    grid-template-columns: repeat(4, 1fr); 
+    /* Hilangkan semua celah agar menempel */
+    gap: 0; 
+    padding: 0;
 }
 
 .portfolio-item {
     position: relative;
-    aspect-ratio: 16/9;
+    /* Rasio 16:9 agar simetris */
+    aspect-ratio: 16/9; 
     cursor: pointer;
     overflow: hidden;
 }
@@ -54,18 +104,44 @@ nav {
 .portfolio-item img, .portfolio-item video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Mengisi kotak tanpa gepeng */
+    object-fit: cover; 
+    display: block;
+}
+
+/* Overlay muncul saat hover */
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1;
+}
+
+.overlay h3 {
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    padding: 0 10px;
 }
 
 /* ==========================================
-   2. MODAL SYSTEM (DESKTOP: SPLIT LAYOUT)
+   5. MODAL SYSTEM (DESKTOP: SPLIT LAYOUT)
    ========================================== */
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     z-index: 9999;
     justify-content: center;
     align-items: center;
@@ -73,18 +149,17 @@ nav {
 
 .modal-content {
     display: flex;
-    flex-direction: row; /* Kiri-Kanan di Desktop */
+    flex-direction: row; /* Kiri media, Kanan teks di Desktop */
     width: 90%;
     max-width: 1000px;
     background: #111;
-    border: 1px solid #333;
+    border: 1px solid #2a2a2a;
     overflow: hidden;
-    /* Kunci agar selalu di tengah */
     margin: auto; 
 }
 
 #modalMedia {
-    flex: 2;
+    flex: 2; /* Bagian video lebih lebar */
     background: #000;
 }
 
@@ -92,71 +167,40 @@ nav {
     width: 100%;
     aspect-ratio: 16/9;
     display: block;
+    object-fit: contain;
 }
 
 .modal-text {
-    flex: 1;
-    padding: 30px;
+    flex: 1; /* Bagian teks lebih sempit */
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
+.modal-text h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.modal-text p {
+    font-size: 14px;
+    color: #bbb;
+}
+
 .close-btn {
     position: absolute;
-    top: 20px; right: 20px;
+    top: 20px; right: 25px;
     font-size: 35px;
     color: white;
     cursor: pointer;
 }
 
 /* ==========================================
-   3. PERBAIKAN MOBILE (PAS DI TENGAH)
+   6. RESPONSIVE MOBILE (1 KOLOM PENUH)
    ========================================== */
 @media (max-width: 768px) {
-    /* Menghilangkan semua margin/padding yang bikin miring */
-    body {
-        padding: 0;
+    /* Header di HP */
+    .nav-links {
+        gap: 15px;
     }
-
-    .portfolio-grid {
-        grid-template-columns: 1fr; /* Satu kolom penuh */
-        padding: 0; /* Menempel ke pinggir layar seperti referensi */
-        gap: 0; /* Menghilangkan celah antar gambar */
-    }
-
-    .modal-content {
-        flex-direction: column; /* Tumpuk: Video atas, Teks bawah */
-        width: 100%; /* Full lebar HP */
-        height: auto;
-        max-height: 100vh;
-        border: none; /* Hilangkan border agar bersih */
-        margin: 0; /* Hilangkan margin luar */
-    }
-
-    #modalMedia {
-        width: 100%;
-    }
-
-    .modal-text {
-        width: 100%;
-        padding: 20px;
-        text-align: center; /* Teks rata tengah agar simetris */
-    }
-
-    .modal-text h2 {
-        font-size: 1.2rem;
-    }
-
-    .close-btn {
-        top: 10px;
-        right: 15px;
-        background: rgba(0,0,0,0.5); /* Beri background agar kelihatan di HP */
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
