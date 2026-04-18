@@ -192,28 +192,51 @@ nav {
     height: 450px; /* Ukuran kotak putih di screenshot kamu */
 }
 
-/* Styling Footer agar selalu di bawah */
+/* --- Tambahkan di bagian paling bawah file style.css --- */
+
+/* Pengaturan Layout Body agar Footer tetap di bawah */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
+/* Container utama yang membungkus konten (Grid atau About) */
+main, section {
+    flex: 1;
+}
+
+/* Styling Footer Center Layout */
 .footer-social {
-    margin-top: auto; /* Memaksa footer ke bawah */
-    padding: 30px 5%;
-    text-align: right;
+    width: 100%;
+    padding: 60px 0 40px;
+    background-color: black;
+    display: flex;
+    justify-content: center; /* Membuat konten ke tengah secara horizontal */
+    align-items: center;
 }
 
-.social-icons a {
-    color: white;
-    font-size: 20px;
-    margin-left: 15px;
+.social-links-text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social-links-text a {
+    color: #888;
     text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .about-container { flex-direction: column; }
-    .about-visual { height: 300px; }
+.social-links-text a:hover {
+    color: white;
+}
+
+.divider {
+    color: #444;
+    margin: 0 10px;
+}
 }
