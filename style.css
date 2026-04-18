@@ -54,64 +54,64 @@ nav {
 /* ==========================================
    3. GRID PORTFOLIO
    ========================================== */
-/* --- 1. RESET LAYOUT --- */
-/* --- 1. SETTING CONTAINER UTAMA --- */
+/* --- 1. PENGATURAN GRID DASAR --- */
 .portfolio-grid {
     display: grid;
-    /* Default Desktop: 4 kolom */
     grid-template-columns: repeat(4, 1fr); 
     gap: 0; 
     padding: 0;
     width: 100%;
-    /* Batasi lebar maksimal agar tidak 'memaksa' di layar lebar */
-    max-width: 1200px; 
-    /* Agar grid berada di tengah dan punya celah kanan-kiri */
+    /* Memastikan grid berada di tengah jika ada ruang sisa */
     margin: 0 auto; 
+    max-width: 1400px; 
 }
 
-/* --- 2. ITEM & THUMBNAIL (Fix Zoom 4:3) --- */
+/* --- 2. PERBAIKAN MEDIA (GIF & VIDEO) --- */
 .portfolio-item {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3; /* */
+    aspect-ratio: 4 / 3; /* Menjaga rasio 4:3 sesuai keinginanmu */
     overflow: hidden;
+    background-color: #000;
 }
 
-/* Mengembalikan ke 'cover' agar GIF/Video tidak gepeng/ketarik */
 .portfolio-item img, 
 .portfolio-item video,
 .video-preview {
     width: 100%;
     height: 100%;
+    /* Gunakan 'cover' agar kotak penuh, namun jika GIF terasa terlalu zoom, 
+       pastikan resolusi file aslimu adalah 4:3 saat export */
     object-fit: cover; 
     display: block;
 }
 
-/* --- 3. RESPONSIVE UNTUK IPAD & MOBILE --- */
+/* --- 3. AUTO LAYOUT KHUSUS IPAD (DENGAN CELAH SAMPING) --- */
 
-/* A. iPad Landscape & Portrait */
-/* Menggunakan 3 kolom agar tidak terlalu kecil/memaksa */
+/* Mode iPad Landscape (3 Kolom dengan Margin) */
 @media (max-width: 1024px) {
     .portfolio-grid {
         grid-template-columns: repeat(3, 1fr);
-        /* Memberikan celah samping yang nyata di iPad */
-        max-width: 90%; 
+        /* Memberikan celah 5% di kiri dan 5% di kanan */
+        width: 90%; 
+        max-width: 900px;
     }
 }
 
-/* B. Tablet Kecil / iPad Mini Portrait */
+/* Mode iPad Portrait (2 Kolom dengan Margin) */
 @media (max-width: 768px) {
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
-        max-width: 95%;
+        /* Memberikan celah agar tidak menempel ke pinggir layar */
+        width: 85%; 
     }
 }
 
-/* C. Mobile/HP (Tetap Full agar tidak kekecilan) */
+/* Mode Smartphone (Kembali Full agar tidak terlalu kecil) */
 @media (max-width: 480px) {
     .portfolio-grid {
         grid-template-columns: 1fr;
-        max-width: 100%;
+        width: 100%;
     }
 }
 
