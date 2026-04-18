@@ -167,29 +167,84 @@ nav {
     }
 }
 /* Styling About Me */
+/* --- BAGIAN ABOUT ME (GANTI KODE LAMA DENGAN INI) --- */
+
 #page-about {
-    min-height: 80vh;
-    padding: 50px 5%;
-    background: black;
+    display: none; /* Akan diubah jadi 'flex' oleh JavaScript */
+    padding: 100px 10% 60px;
+    background-color: black;
     color: white;
-    display: none; /* Default sembunyi */
+    justify-content: center;
     align-items: center;
+    gap: 50px;
 }
 
 .about-container {
     display: flex;
+    flex-direction: row; /* Layout menyamping */
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    gap: 40px;
+    max-width: 1200px;
 }
 
-.about-text { flex: 1; }
-.about-text h1 { font-size: 60px; margin-bottom: 20px; }
-.about-text .email { margin-top: 20px; font-weight: bold; }
+.about-text {
+    flex: 1;
+}
 
+.about-text h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+/* --- STYLING EMAIL (LEBIH TEBAL) --- */
+.email-link a {
+    text-decoration: none;
+    color: white;
+    font-weight: 700; /* Membuat font lebih tebal dari teks di atasnya */
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.email-link a:hover {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- STYLING GAMBAR --- */
 .about-visual {
-    flex: 1.5;
-    background: white;
-    height: 450px; /* Ukuran kotak putih di screenshot kamu */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-img {
+    width: 100%;
+    max-width: 500px; /* Batas lebar gambar */
+    height: auto;
+    border-radius: 10px; /* Sudut melengkung halus */
+    object-fit: cover;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column; /* Gambar pindah ke bawah teks di HP */
+        text-align: center;
+    }
+    
+    .about-text h1 {
+        font-size: 3rem;
+    }
+}/
 }
 
 /* --- Tambahkan di bagian paling bawah file style.css --- */
