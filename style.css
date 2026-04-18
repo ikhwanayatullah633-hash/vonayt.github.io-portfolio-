@@ -1,74 +1,168 @@
-/* --- 1. RESET CONTAINER UTAMA --- */
-body, main {
-    width: 100%;
+/* ==========================================
+   1. SETUP FONTS & DASAR
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #050505;
+    color: white;
+    font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
 }
 
-/* --- 2. GRID SISTEM (Rapat & Tanpa Celah) --- */
+h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+/* ==========================================
+   2. HEADER & NAVIGASI
+   ========================================== */
+header {
+    padding: 15px 5%;
+    background: #000;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo { font-size: 1.5rem; font-weight: 700; font-family: 'Poppins'; }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: lowercase;
+}
+
+.social-icons { display: flex; gap: 15px; }
+
+/* ==========================================
+   3. GRID PORTFOLIO
+   ========================================== */
 .portfolio-grid {
     display: grid;
-    /* Default Desktop: 4 kolom */
     grid-template-columns: repeat(4, 1fr); 
-    gap: 0;         /* Pastikan 0 agar rapat seperti gambar 4 */
-    padding: 0;     /* Pastikan 0 agar tidak ada celah di pinggir */
+    gap: 0; 
+    padding: 0;
     width: 100%;
-    margin: 0;
 }
 
-/* --- 3. ITEM & MEDIA (Fix Zoom & Rasio 4:3) --- */
 .portfolio-item {
     position: relative;
-    width: 100%;
-    /* Mengunci rasio kotak 4:3 */
-    aspect-ratio: 4 / 3; 
+    aspect-ratio: 4/3; /* DIPERBAIKI: Menggunakan format standar */
+    cursor: pointer;
     overflow: hidden;
-    background-color: #000;
 }
 
-/* Memperbaiki GIF/Video agar tidak terlalu zoom */
-.portfolio-item img, 
-.portfolio-item video,
-.video-preview {
+.portfolio-item img, .portfolio-item video {
     width: 100%;
     height: 100%;
-    /* 'fill' atau 'contain' akan mencegah zoom berlebih, 
-       namun 'cover' adalah yang paling standar untuk grid. 
-       Gunakan 'fill' jika ingin gambar dipaksa pas ke 4:3 tanpa zoom */
-    object-fit: fill; 
+    object-fit: cover;
     display: block;
 }
 
-/* --- 4. AUTO LAYOUT KHUSUS IPAD & SEMUA PERANGKAT --- */
-
-/* A. Desktop (Lebar di atas 1024px) -> 4 Kolom */
-@media (min-width: 1025px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+/* Overlay Hover */
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s ease;
 }
 
-/* B. iPad Landscape (Tampilan Gambar 3: 3 Kolom) */
-/* Rentang layar iPad miring (Landscape) */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.portfolio-item:hover .overlay { opacity: 1; }
+
+/* ==========================================
+   4. MODAL SYSTEM (Overlay Transparan & Blur)
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* MODIFIKASI: Latar belakang transparan */
+    background: rgba(0, 0, 0, 0.7); 
+    /* Efek Blur Glassmorphism */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
 }
 
-/* C. iPad Portrait (Tampilan Gambar 4: 2 Kolom Lebar) */
-/* Ini menghilangkan celah hitam karena 2 kolom akan memenuhi lebar layar */
-@media (max-width: 768px) and (min-width: 481px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.modal-content {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1100px;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
 }
 
-/* D. Mobile/HP (Tampilan 1 Kolom) */
-@media (max-width: 480px) {
+#modalMedia { flex: 2; background: #000; display: flex; align-items: center; }
+#modalMedia video, #modalMedia img { width: 100%; display: block; }
+
+.modal-text {
+    flex: 1;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px; right: 25px;
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+/* ==========================================
+   5. RESPONSIVE MOBILE
+   ========================================== */
+@media (max-width: 768px) {
     .portfolio-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .modal-content {
+        flex-direction: column;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-text {
+        text-align: center;
+        padding: 20px;
     }
 }
