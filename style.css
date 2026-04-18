@@ -1,404 +1,74 @@
-/* ==========================================
-   1. SETUP FONTS & DASAR
-   ========================================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
-
-* {
+/* --- 1. RESET CONTAINER UTAMA --- */
+body, main {
+    width: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #050505;
-    color: white;
-    font-family: 'Roboto', sans-serif;
+    background-color: #000;
     overflow-x: hidden;
 }
 
-h1, h2, h3 { font-family: 'Poppins', sans-serif; }
-
-/* ==========================================
-   2. HEADER & NAVIGASI
-   ========================================== */
-header {
-    padding: 15px 5%;
-    background: #000;
-    border-bottom: 1px solid #1a1a1a;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo { font-size: 1.5rem; font-weight: 700; font-family: 'Poppins'; }
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    text-transform: lowercase;
-}
-
-.social-icons { display: flex; gap: 15px; }
-
-/* ==========================================
-   3. GRID PORTFOLIO
-   ========================================== */
-/* --- 1. LAYOUT UTAMA GRID (Desktop: 4 Kolom) --- */
+/* --- 2. GRID SISTEM (Rapat & Tanpa Celah) --- */
 .portfolio-grid {
     display: grid;
-    /* Membuat 4 kolom sama besar */
+    /* Default Desktop: 4 kolom */
     grid-template-columns: repeat(4, 1fr); 
-    gap: 0; /* Membuat video rapat tanpa jarak hitam di antaranya */
-    padding: 0; /* Rapat ke pinggir layar browser */
+    gap: 0;         /* Pastikan 0 agar rapat seperti gambar 4 */
+    padding: 0;     /* Pastikan 0 agar tidak ada celah di pinggir */
     width: 100%;
-    margin: 0 auto;
-}
-
-/* --- 2. PENGATURAN ITEM VIDEO --- */
-.portfolio-item {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4 / 3; /* Memastikan rasio kotak tetap 4:3 */
-    background-color: #000;
-    border-radius: 0; /* Sudut tajam agar rapat sempurna seperti ubin */
     margin: 0;
 }
 
+/* --- 3. ITEM & MEDIA (Fix Zoom & Rasio 4:3) --- */
+.portfolio-item {
+    position: relative;
+    width: 100%;
+    /* Mengunci rasio kotak 4:3 */
+    aspect-ratio: 4 / 3; 
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* Memperbaiki GIF/Video agar tidak terlalu zoom */
+.portfolio-item img, 
+.portfolio-item video,
 .video-preview {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Video memenuhi kotak tanpa sisa ruang */
-    display: block; /* Menghilangkan celah kecil di bawah video */
+    /* 'fill' atau 'contain' akan mencegah zoom berlebih, 
+       namun 'cover' adalah yang paling standar untuk grid. 
+       Gunakan 'fill' jika ingin gambar dipaksa pas ke 4:3 tanpa zoom */
+    object-fit: fill; 
+    display: block;
 }
 
-/* --- 3. AUTO LAYOUT (Responsif untuk Tablet & HP) --- */
+/* --- 4. AUTO LAYOUT KHUSUS IPAD & SEMUA PERANGKAT --- */
 
-/* Tampilan Landscape iPad / Monitor Kecil (3 Kolom) */
-@media (max-width: 1024px) {
+/* A. Desktop (Lebar di atas 1024px) -> 4 Kolom */
+@media (min-width: 1025px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* B. iPad Landscape (Tampilan Gambar 3: 3 Kolom) */
+/* Rentang layar iPad miring (Landscape) */
+@media (max-width: 1024px) and (min-width: 769px) {
     .portfolio-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-/* Tampilan Portrait iPad / Tablet (2 Kolom) */
-@media (max-width: 768px) {
+/* C. iPad Portrait (Tampilan Gambar 4: 2 Kolom Lebar) */
+/* Ini menghilangkan celah hitam karena 2 kolom akan memenuhi lebar layar */
+@media (max-width: 768px) and (min-width: 481px) {
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Tampilan Mobile/HP (1 Kolom Menyusun ke Bawah) */
+/* D. Mobile/HP (Tampilan 1 Kolom) */
 @media (max-width: 480px) {
     .portfolio-grid {
         grid-template-columns: 1fr;
     }
-}
-/* Overlay Hover */
-.overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: 0.3s ease;
-}
-
-.portfolio-item:hover .overlay { opacity: 1; }
-
-/* ==========================================
-   4. MODAL SYSTEM (Overlay Transparan & Blur)
-   ========================================== */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    /* MODIFIKASI: Latar belakang transparan */
-    background: rgba(0, 0, 0, 0.7); 
-    /* Efek Blur Glassmorphism */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    max-width: 1100px;
-    background: #111;
-    border: 1px solid #2a2a2a;
-    margin: auto;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-}
-
-#modalMedia { flex: 2; background: #000; display: flex; align-items: center; }
-#modalMedia video, #modalMedia img { width: 100%; display: block; }
-
-.modal-text {
-    flex: 1;
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.close-btn {
-    position: absolute;
-    top: 20px; right: 25px;
-    font-size: 35px;
-    color: white;
-    cursor: pointer;
-    z-index: 10001;
-}
-
-/* ==========================================
-   5. RESPONSIVE MOBILE
-   ========================================== */
-@media (max-width: 768px) {
-    .portfolio-grid {
-        grid-template-columns: 1fr; 
-    }
-
-    nav {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .modal-content {
-        flex-direction: column;
-        width: 95%;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    .modal-text {
-        text-align: center;
-        padding: 20px;
-    }
-}
-/* Styling About Me */
-/* --- BAGIAN ABOUT ME (GANTI KODE LAMA DENGAN INI) --- */
-
-/* --- AUTO LAYOUT UNTUK MOBILE --- */
-@media (max-width: 768px) {
-    #page-about {
-        padding: 80px 5% 40px; /* Kurangi padding agar pas di layar HP */
-    }
-
-    .about-container {
-        flex-direction: column; /* Mengubah layout dari samping ke atas-bawah */
-        text-align: left; /* Tetap rata kiri untuk teks agar konsisten dengan desainmu */
-        gap: 30px; /* Jarak antara tulisan dan gambar */
-    }
-
-    .about-text {
-        width: 100%;
-        order: 1; /* Memastikan tulisan muncul pertama (di atas) */
-    }
-
-    .about-text h1 {
-        font-size: 3.5rem; /* Ukuran HELLO sedikit lebih kecil agar tidak terpotong */
-        margin-bottom: 15px;
-    }
-
-    .about-visual {
-        width: 100%;
-        order: 2; /* Memastikan gambar muncul kedua (di bawah) */
-        display: flex;
-        justify-content: center;
-    }
-
-    .about-img {
-        width: 100%; /* Gambar memenuhi lebar layar HP */
-        max-width: none;
-        height: auto;
-        aspect-ratio: 4 / 3; /* Menjaga proporsi gambar kamu tetap 4:3 */
-        object-fit: cover;
-    }
-}
-
-/* --- STYLING EMAIL (LEBIH TEBAL) --- */
-.email-link a {
-    text-decoration: none;
-    color: white;
-    font-weight: 700; /* Membuat font lebih tebal dari teks di atasnya */
-    font-size: 1.2rem;
-    transition: 0.3s;
-}
-
-.email-link a:hover {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-/* --- STYLING GAMBAR --- */
-.about-visual {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- VERSI TERBARU: ABOUT ME LAYOUT --- */
-
-#page-about {
-    display: none; /* Diubah jadi 'flex' lewat JS saat tombol diklik */
-    padding: 80px 10%;
-    background-color: black;
-    color: white;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-}
-
-.about-container {
-    display: flex;
-    flex-direction: row; /* Posisi menyamping untuk desktop */
-    align-items: center;
-    gap: 50px;
-    width: 100%;
-    max-width: 1100px;
-}
-
-.about-text {
-    flex: 1.2; /* Memberikan ruang lebih besar untuk teks */
-}
-
-.about-text h1 {
-    font-size: 4.5rem;
-    margin-bottom: 20px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.about-text p {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 10px;
-}
-
-/* Email Styling */
-.email-link a {
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.2rem;
-    display: inline-block;
-    margin-top: 10px;
-    border-bottom: 2px solid white; /* Efek garis bawah agar menonjol */
-}
-
-.about-visual {
-    flex: 1; /* Ruang seimbang untuk gambar */
-    display: flex;
-    justify-content: center;
-}
-
-.about-img {
-    width: 100%;
-    height: auto;
-    max-width: 450px;
-    border-radius: 12px;
-    object-fit: cover;
-    /* Mencegah gambar menjadi penyet atau tipis */
-    aspect-ratio: 4 / 3; 
-}
-
-/* --- AUTO LAYOUT UNTUK MOBILE (AGAR TIDAK RUSAK) --- */
-@media (max-width: 768px) {
-    .about-container {
-        flex-direction: column; /* Teks di atas, gambar di bawah */
-        text-align: left;
-        gap: 40px;
-    }
-
-    .about-text h1 {
-        font-size: 3.5rem;
-    }
-
-    .about-visual {
-        width: 100%;
-    }
-
-    .about-img {
-        max-width: 100%;
-    }
-}
-
-/* --- Tambahkan di bagian paling bawah file style.css --- */
-
-/* Pengaturan Layout Body agar Footer tetap di bawah */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-}
-
-/* Container utama yang membungkus konten (Grid atau About) */
-main, section {
-    flex: 1;
-}
-
-/* Styling Footer Center Layout */
-/* Pastikan body menggunakan flex agar footer konsisten di bawah */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.footer-social {
-    width: 100%;
-    margin-top: auto; /* Memastikan footer tetap di bawah */
-    padding: 40px 0;
-    background-color: black;
-    /* Membuat konten di dalamnya rata tengah */
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-}
-
-.social-links-text {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.social-links-text a {
-    /* Warna putih pudar (opacity 0.5) */
-    color: rgba(255, 255, 255, 0.5); 
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-}
-
-.social-links-text a:hover {
-    /* Warna putih terang saat kursor di atasnya */
-    color: rgba(255, 255, 255, 1);
-}
-
-.divider {
-    /* Warna garis pembagi putih pudar */
-    color: rgba(255, 255, 255, 0.3);
-    margin: 0 10px;
 }
