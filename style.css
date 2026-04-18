@@ -54,26 +54,68 @@ nav {
 /* ==========================================
    3. GRID PORTFOLIO
    ========================================== */
+/* --- 1. RESET LAYOUT --- */
+body, main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    overflow-x: hidden;
+}
+
+/* --- 2. GRID UTAMA (Konsep Rapat & Auto) --- */
 .portfolio-grid {
     display: grid;
+    /* Default Desktop: 4 kolom rapat */
     grid-template-columns: repeat(4, 1fr); 
     gap: 0; 
     padding: 0;
     width: 100%;
+    margin: 0 auto;
 }
 
+/* --- 3. ITEM & MEDIA (Fix Zoom & Distorsi) --- */
 .portfolio-item {
     position: relative;
-    aspect-ratio: 4/3; /* DIPERBAIKI: Menggunakan format standar */
-    cursor: pointer;
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Mengunci rasio agar semua sama rata */
     overflow: hidden;
+    background-color: #000;
 }
 
-.portfolio-item img, .portfolio-item video {
+.portfolio-item img, 
+.portfolio-item video,
+.video-preview {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* KEMBALI KE COVER: Ini agar gambar tidak gepeng/ketarik. 
+       Jika terlalu zoom, artinya file aslimu bukan 4:3. 
+       Namun ini adalah cara paling rapi untuk grid. */
+    object-fit: cover; 
     display: block;
+}
+
+/* --- 4. RESPONSIVE BREAKPOINTS (iPad & Mobile) --- */
+
+/* iPad Landscape (Tampilan 3 Kolom - Rapi & Tidak Maksa) */
+@media (max-width: 1199px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* iPad Portrait (Tampilan 2 Kolom - Menghilangkan Celah Hitam) */
+@media (max-width: 899px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Smartphone (Tampilan 1 Kolom) */
+@media (max-width: 480px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Overlay Hover */
