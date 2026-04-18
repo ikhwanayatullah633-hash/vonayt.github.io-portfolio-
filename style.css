@@ -54,26 +54,62 @@ nav {
 /* ==========================================
    3. GRID PORTFOLIO
    ========================================== */
+/* --- LAYOUT UTAMA GRID (Desktop: 4 Kolom) --- */
 .portfolio-grid {
     display: grid;
+    /* Secara default kita set untuk desktop: 4 kolom sama besar */
     grid-template-columns: repeat(4, 1fr); 
-    gap: 0; 
-    padding: 0;
+    gap: 15px; /* Jarak antar kotak animasi */
+    padding: 20px;
     width: 100%;
+    max-width: 1400px; /* Batas lebar maksimal agar tidak terlalu melar */
+    margin: 0 auto;
 }
 
+/* --- RESPONSIVE AUTO LAYOUT (MEDIA QUERIES) --- */
+
+/* 1. Tampilan Landscape iPad / Monitor Kecil (3 Kolom) */
+@media (max-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 2. Tampilan Portrait iPad / Tablet (2 Kolom) */
+@media (max-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px; /* Jarak sedikit lebih rapat di tablet */
+    }
+}
+
+/* 3. Tampilan Mobile/HP (1 Kolom Menyusun ke Bawah) */
+@media (max-width: 480px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* Full 1 kolom ke bawah */
+        padding: 10px;
+    }
+    
+    .portfolio-item {
+        aspect-ratio: 4 / 3; /* Menjaga konsistensi rasio 4:3 di HP */
+    }
+}
+
+/* --- PENGATURAN ITEM AGAR TIDAK RUSAK --- */
 .portfolio-item {
     position: relative;
-    aspect-ratio: 4/3; /* DIPERBAIKI: Menggunakan format standar */
-    cursor: pointer;
     overflow: hidden;
+    aspect-ratio: 4 / 3; /* Sesuaikan dengan rasio thumbnail animasi kamu */
+    background-color: #111;
+    border-radius: 8px; /* Agar sudutnya sedikit melengkung rapi */
 }
 
-.portfolio-item img, .portfolio-item video {
+.video-preview {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Agar video selalu penuh di dalam kotak */
     display: block;
+}
 }
 
 /* Overlay Hover */
