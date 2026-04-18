@@ -10,34 +10,38 @@
 body {
     background-color: #000;
     color: #fff;
-    font-family: 'Poppins', sans-serif; /* Menggunakan Poppins sesuai preferensi */
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
 }
 
-/* --- 2. HEADER & NAVIGATION --- */
+/* --- 2. HEADER (Ikut Terscroll / Tidak Sticky) --- */
 header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Membuat Logo di atas dan Menu di bawah jika perlu */
     align-items: center;
-    padding: 20px 5%;
+    padding: 60px 20px; /* Padding lebih besar agar mirip gambar yang kamu kirim */
     background: #000;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: relative; /* Ini kuncinya agar header ikut terscroll ke atas */
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin-left: 20px;
-    font-family: 'Roboto', sans-serif; /* Roboto untuk navigasi agar terlihat modern */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
     transition: 0.3s;
 }
 
@@ -52,67 +56,85 @@ nav a:hover {
     gap: 0; 
     width: 100%;
     max-width: 1400px;
-    margin: 40px auto; /* Memberikan jarak dari header/footer */
+    margin: 0 auto; /* Menjaga grid di tengah */
 }
 
 .portfolio-item {
     position: relative;
-    aspect-ratio: 4 / 3; /* Mengunci rasio 4:3 */
+    aspect-ratio: 4 / 3; /* Rasio 4:3 konsisten */
     overflow: hidden;
-    cursor: pointer;
+    background-color: #000;
 }
 
-.portfolio-item video, 
-.portfolio-item img {
+.portfolio-item img, 
+.portfolio-item video,
+.video-preview {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Mencegah gambar gepeng */
+    object-fit: cover; /* Tidak gepeng */
     display: block;
 }
 
-/* Overlay Judul saat Hover */
-.overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: 0.3s;
-}
+/* --- 4. RESPONSIVE UNTUK IPAD (Sesuai Gambar Referensi) --- */
 
-.portfolio-item:hover .overlay {
-    opacity: 1;
-}
-
-/* --- 4. RESPONSIVE (iPad & Mobile) --- */
-
-/* iPad Landscape (3 Kolom + Celah Samping) */
+/* iPad Landscape (3 Kolom + Celah Samping Kiri Kanan) */
 @media (max-width: 1199px) {
     .portfolio-grid {
         grid-template-columns: repeat(3, 1fr);
-        width: 90%; /* Memberikan celah samping seperti permintaanmu */
+        width: 90%; /* Memberikan margin samping sesuai permintaan */
     }
 }
 
-/* iPad Portrait (2 Kolom + Celah Samping) */
+/* iPad Portrait (2 Kolom + Celah Samping Kiri Kanan) */
 @media (max-width: 899px) {
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
-        width: 85%; /* Celah samping lebih terlihat */
+        width: 85%; /* Margin samping lebih lebar agar tidak maksa */
     }
 }
 
-/* Mobile (1 Kolom Full) */
+/* Smartphone (1 Kolom Full) */
 @media (max-width: 480px) {
     .portfolio-grid {
         grid-template-columns: 1fr;
-        width: 100%;
+        width: 100%; /* Di HP tetap full agar jelas */
     }
 }
 
-/* --- 5. MODAL / POP-UP (Full Screen) --- */
+/* --- 5. FOOTER (Sosial Media Teks Rata Tengah) --- */
+footer {
+    padding: 80px 20px;
+    background: #000;
+    text-align: center;
+}
+
+.footer-socials {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-socials a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.footer-socials a:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 20px;
+}
+
+/* --- 6. MODAL / POP-UP (Tetap Full Screen) --- */
 .modal {
     display: none;
     position: fixed;
@@ -121,38 +143,9 @@ nav a:hover {
     z-index: 2000;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
 .modal-content {
     max-width: 90%;
-    max-height: 80vh;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.1);
-}
-
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 30px;
-    color: white;
-    cursor: pointer;
-}
-
-/* --- 6. FOOTER --- */
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    background: #000;
-    border-top: 1px solid #222;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.social-links a {
-    color: #fff;
-    font-size: 1.2rem;
-    margin: 0 10px;
-    text-decoration: none;
+    max-height: 85vh;
 }
