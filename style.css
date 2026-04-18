@@ -1,132 +1,117 @@
-/* ==========================================
-   1. SETUP FONTS & DASAR
-   ========================================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
-
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    background-color: #050505;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    overflow-x: hidden;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-h1, h2, h3 { font-family: 'Poppins', sans-serif; }
-
-/* ==========================================
-   2. HEADER & NAVIGASI
-   ========================================== */
+/* HEADER & NAV */
 header {
-    padding: 15px 5%;
-    background: #000;
-    border-bottom: 1px solid #1a1a1a;
-}
-
-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 30px 5%;
 }
 
-.logo { font-size: 1.5rem; font-weight: 700; font-family: 'Poppins'; }
+.logo { font-size: 24px; font-weight: bold; }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-links a {
-    color: white;
+nav a {
+    color: #888;
     text-decoration: none;
-    font-size: 14px;
+    margin-left: 20px;
     text-transform: lowercase;
+    transition: 0.3s;
 }
 
-.social-icons { display: flex; gap: 15px; }
+nav a.active, nav a:hover { color: #fff; }
 
-/* ==========================================
-   3. GRID PORTFOLIO
-   ========================================== */
-.portfolio-grid {
+/* LAYOUT ANIMATION (GRID) */
+.gallery-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 0; 
-    padding: 0;
-    width: 100%;
+    grid-template-columns: repeat(4, 1fr); /* Desktop: 4 Kolom */
+    gap: 10px;
+    padding: 0 5%;
 }
 
-.portfolio-item {
-    position: relative;
-    aspect-ratio: 4/3; /* DIPERBAIKI: Menggunakan format standar */
-    cursor: pointer;
+.grid-item {
+    aspect-ratio: 4/3;
     overflow: hidden;
+    cursor: pointer;
 }
 
-.portfolio-item img, .portfolio-item video {
+.grid-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    transition: 0.3s;
 }
 
-/* Overlay Hover */
-.overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
+.grid-item:hover img { transform: scale(1.05); }
+
+/* LAYOUT ABOUT (SPLIT) */
+.split-layout {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: 0.3s ease;
+    min-height: 70vh;
+    padding: 0 5%;
 }
 
-.portfolio-item:hover .overlay { opacity: 1; }
-
-/* ==========================================
-   4. MODAL SYSTEM (Overlay Transparan & Blur)
-   ========================================== */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    /* MODIFIKASI: Latar belakang transparan */
-    background: rgba(0, 0, 0, 0.7); 
-    /* Efek Blur Glassmorphism */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    max-width: 1100px;
-    background: #111;
-    border: 1px solid #2a2a2a;
-    margin: auto;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-}
-
-#modalMedia { flex: 2; background: #000; display: flex; align-items: center; }
-#modalMedia video, #modalMedia img { width: 100%; display: block; }
-
-.modal-text {
+.split-left {
     flex: 1;
-    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 50px;
+}
+
+.split-left h1 { font-size: 60px; margin-bottom: 20px; }
+
+.split-right {
+    flex: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+.profile-box {
+    width: 100%;
+    height: 400px;
+    background: #fff;
+}
+
+/* OVERLAY (TRANSPARAN) */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Transparansi Latar */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.overlay.show { display: flex; }
+
+.overlay-content {
+    background: #111;
+    display: flex;
+    width: 90%;
+    max-width: 1000px;
+    position: relative;
+}
+
+.overlay-video-side { flex: 2; line-height: 0; }
+.overlay-video-side video { width: 100%; height: auto; }
+
+.overlay-text-side {
+    flex: 1;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -134,35 +119,28 @@ nav {
 
 .close-btn {
     position: absolute;
-    top: 20px; right: 25px;
-    font-size: 35px;
-    color: white;
-    cursor: pointer;
-    z-index: 10001;
+    top: 10px; right: 20px;
+    background: none; border: none; color: #fff; font-size: 30px; cursor: pointer;
 }
 
-/* ==========================================
-   5. RESPONSIVE MOBILE
-   ========================================== */
+/* FOOTER */
+footer {
+    margin-top: auto;
+    padding: 40px 0;
+    text-align: right;
+    padding-right: 5%;
+}
+
+.social-icons img { width: 24px; margin-left: 15px; filter: invert(1); }
+
+/* UTILITY */
+.hidden { display: none; }
+
+/* RESPONSIVE (MOBILE) */
 @media (max-width: 768px) {
-    .portfolio-grid {
-        grid-template-columns: 1fr; 
-    }
-
-    nav {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .modal-content {
-        flex-direction: column;
-        width: 95%;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    .modal-text {
-        text-align: center;
-        padding: 20px;
-    }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .split-layout { flex-direction: column; }
+    .split-left { padding-right: 0; margin-bottom: 30px; }
+    .overlay-content { flex-direction: column; }
+    .overlay-text-side { padding: 20px; }
 }
