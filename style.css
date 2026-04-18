@@ -100,7 +100,7 @@ nav {
     top: 0; left: 0;
     width: 100%; height: 100%;
     /* MODIFIKASI: Latar belakang transparan */
-    background: rgba(0, 0, 0, 0.75); 
+    background: rgba(0, 0, 0, 0.7); 
     /* Efek Blur Glassmorphism */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
